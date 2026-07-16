@@ -17,20 +17,20 @@ const TOWER_COSTS := {
 	TowerType.SPLASH: 110,
 }
 const TOWER_NAMES := {
-	TowerType.BASIC: "基础宝塔",
-	TowerType.CANNON: "火炮宝塔",
-	TowerType.RAPID: "疾风宝塔",
-	TowerType.SNIPER: "狙击宝塔",
-	TowerType.FROST: "冰霜宝塔",
-	TowerType.SPLASH: "爆裂宝塔",
+	TowerType.BASIC: "Basic",
+	TowerType.CANNON: "Cannon",
+	TowerType.RAPID: "Rapid",
+	TowerType.SNIPER: "Sniper",
+	TowerType.FROST: "Frost",
+	TowerType.SPLASH: "Splash",
 }
 const TOWER_DESCRIPTIONS := {
-	TowerType.BASIC: "均衡型，射程较远",
-	TowerType.CANNON: "高伤害，攻速慢",
-	TowerType.RAPID: "攻速快，单发伤害低",
-	TowerType.SNIPER: "超远射程，精准高伤",
-	TowerType.FROST: "攻击附带减速效果",
-	TowerType.SPLASH: "命中造成范围爆炸",
+	TowerType.BASIC: "Balanced, good range",
+	TowerType.CANNON: "High damage, slow fire rate",
+	TowerType.RAPID: "Fast fire rate, low damage",
+	TowerType.SNIPER: "Long range, high damage",
+	TowerType.FROST: "Attacks slow enemies",
+	TowerType.SPLASH: "Splash damage on hit",
 }
 
 const TOTAL_WAVES := 10
@@ -81,7 +81,7 @@ func setup(main: Node2D) -> void:
 
 func start_game() -> void:
 	if not _is_setup:
-		push_error("GameManager 尚未初始化，请稍候再试")
+		push_error("GameManager is not initialized yet. Please try again.")
 		return
 	gold = 300
 	lives = 20
@@ -153,7 +153,7 @@ func _start_next_wave() -> void:
 	_spawn_speed = 65.0 + wave * 4.0
 	_wave_in_progress = true
 	wave_changed.emit(wave, TOTAL_WAVES)
-	# 立即刷出第一个敌人，避免玩家以为游戏没开始
+	# Spawn the first enemy immediately so players know the game started.
 	_on_spawn_timer_timeout()
 
 

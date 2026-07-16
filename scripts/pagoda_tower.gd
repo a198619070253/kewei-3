@@ -155,4 +155,4 @@ func _draw_pagoda(levels: int, color: Color) -> void:
 		draw_colored_polygon(roof, body_color.darkened(0.3))
 
 	if level < max_level:
-		draw_string(ThemeDB.fallback_font, Vector2(-20, 24), "Lv.%d" % level, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(1, 0.95, 0.7))
+		draw_string(FontSetup.game_font, Vector2(-20, 24), "Lv.%d" % level, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(1, 0.95, 0.7))

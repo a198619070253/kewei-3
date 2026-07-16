@@ -4,3 +4,9 @@
 
 # Web export metadata only (build artifacts are tracked for GitHub Pages)
 web/*.import
+
+# Unused font assets (English UI uses system fallback font)
+fonts/
+
+# Local GitHub CLI tool (not needed in repo)
+.tools/

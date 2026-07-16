@@ -42,12 +42,12 @@ func _draw_path() -> void:
 		draw_line(path_points[i], path_points[i + 1], Color(0.55, 0.42, 0.28), 36.0)
 		draw_line(path_points[i], path_points[i + 1], Color(0.65, 0.52, 0.35), 28.0)
 	draw_circle(path_points[0], 20.0, Color(0.8, 0.3, 0.3, 0.6))
-	draw_string(ThemeDB.fallback_font, path_points[0] + Vector2(-18, -28), "敌营", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.7, 0.7))
+	draw_string(FontSetup.game_font, path_points[0] + Vector2(-18, -28), "Enemy Camp", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.7, 0.7))
 
 
 func _draw_base_pagoda() -> void:
 	_draw_pagoda(BASE_POS, 6, Color(0.85, 0.65, 0.2), true)
-	draw_string(ThemeDB.fallback_font, BASE_POS + Vector2(-24, 58), "主宝塔", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.9, 0.5))
+	draw_string(FontSetup.game_font, BASE_POS + Vector2(-24, 58), "Main Pagoda", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.9, 0.5))
 
 
 func _draw_pagoda(pos: Vector2, levels: int, color: Color, is_base: bool = false) -> void:

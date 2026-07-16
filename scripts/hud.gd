@@ -65,7 +65,7 @@ func _setup_tower_buttons() -> void:
 		var tower_name: String = GameManager.TOWER_NAMES.get(type, "")
 		var tower_cost: int = GameManager.TOWER_COSTS.get(type, 0)
 		var tower_desc: String = GameManager.TOWER_DESCRIPTIONS.get(type, "")
-		btn.text = "%s\n%d金" % [tower_name, tower_cost]
+		btn.text = "%s %dg" % [tower_name, tower_cost]
 		btn.tooltip_text = tower_desc
 		btn.add_theme_color_override("font_color", TOWER_BUTTON_COLORS.get(type, Color.WHITE))
 		btn.pressed.connect(func() -> void: GameManager.select_tower(type))
@@ -96,24 +96,24 @@ func _on_start() -> void:
 
 
 func _on_gold_changed(gold: int) -> void:
-	gold_label.text = "金币: %d" % gold
+	gold_label.text = "Gold: %d" % gold
 	_update_tower_buttons()
 
 
 func _on_lives_changed(lives: int) -> void:
-	lives_label.text = "生命: %d" % lives
+	lives_label.text = "Lives: %d" % lives
 
 
 func _on_wave_changed(current: int, total: int) -> void:
 	if current == 0:
-		wave_label.text = "准备战斗"
+		wave_label.text = "Get Ready"
 	else:
-		wave_label.text = "第 %d / %d 波 · 敌军来袭！" % [current, total]
+		wave_label.text = "Wave %d / %d - Enemies Incoming!" % [current, total]
 		_show_wave_toast(current)
 
 
 func _show_wave_toast(wave: int) -> void:
-	wave_toast.text = "第 %d 波敌军来袭！" % wave
+	wave_toast.text = "Wave %d - Enemies Incoming!" % wave
 	wave_toast.show()
 	var tween := create_tween()
 	tween.tween_interval(1.8)
@@ -136,7 +136,7 @@ func _on_tower_selected(type: int) -> void:
 	var name: String = GameManager.TOWER_NAMES.get(type, "")
 	var cost: int = GameManager.TOWER_COSTS.get(type, 0)
 	var desc: String = GameManager.TOWER_DESCRIPTIONS.get(type, "")
-	hint_label.text = "选中: %s (%d金) · %s | 左键建造/升级" % [name, cost, desc]
+	hint_label.text = "Selected: %s (%dg) · %s | Left-click to build/upgrade" % [name, cost, desc]
 
 
 func _update_tower_buttons() -> void:
@@ -146,7 +146,7 @@ func _update_tower_buttons() -> void:
 
 
 func _on_game_over(victory: bool) -> void:
-	result_label.text = "胜利！成功守住主宝塔！" if victory else "失败！主宝塔被攻破了..."
+	result_label.text = "Victory! You defended the main pagoda!" if victory else "Defeat! The main pagoda was destroyed..."
 	game_over_panel.show()
 
 

@@ -26,18 +26,18 @@ theme_override_constants/separation = 40
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
-text = "金币: 300"
+text = "Gold: 300"
 
 [node name="LivesLabel" type="Label" parent="TopBar/Margin/HBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
-text = "生命: 20"
+text = "Lives: 20"
 
 [node name="WaveLabel" type="Label" parent="TopBar/Margin/HBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "准备战斗"
+text = "Get Ready"
 
 [node name="BottomBar" type="PanelContainer" parent="."]
 anchors_preset = 12
@@ -69,7 +69,7 @@ columns = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.8, 0.85, 0.75, 1)
-text = "点击绿色建造点放置宝塔"
+text = "Click green build slots to place towers"
 vertical_alignment = 1
 
 [node name="StartPanel" type="Control" parent="."]
@@ -112,22 +112,22 @@ theme_override_constants/separation = 16
 [node name="Title" type="Label" parent="StartPanel/Dialog/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "宝塔战争"
+text = "Pagoda Wars"
 horizontal_alignment = 1
 
 [node name="Desc" type="Label" parent="StartPanel/Dialog/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
-text = "建造宝塔，抵御敌军，守护主宝塔！
-共 10 波敌人，6 种宝塔可选：
-基础·火炮·疾风·狙击·冰霜·爆裂"
+text = "Build pagodas, stop the enemy, protect the main pagoda!
+10 waves of enemies. 6 tower types:
+Basic · Cannon · Rapid · Sniper · Frost · Splash"
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="StartButton" type="Button" parent="StartPanel/Dialog/VBox"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-text = "开始战斗"
+text = "Start Battle"
 
 [node name="WaveToast" type="Label" parent="."]
 visible = false
@@ -144,7 +144,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
-text = "敌军来袭！"
+text = "Enemies Incoming!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -169,13 +169,13 @@ theme_override_constants/separation = 16
 [node name="ResultLabel" type="Label" parent="GameOverPanel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "游戏结束"
+text = "Game Over"
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RestartButton" type="Button" parent="GameOverPanel/VBox"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-text = "重新开始"
+text = "Restart"
 
 [connection signal="pressed" from="StartPanel/Dialog/VBox/StartButton" to="." method="_on_start"]
