@@ -1,0 +1,11 @@
+---
+description: Keep game UI and AI replies in English
+alwaysApply: true
+---
+
+# English UI Language
+
+- Respond to the user in English.
+- Keep all player-facing game text in English (labels, buttons, tooltips, toasts).
+- Do not add Chinese UI strings to the Godot game or web build.
+- Godot project locale is `en`; web export must pass `locale: 'en'` to `engine.startGame`.
