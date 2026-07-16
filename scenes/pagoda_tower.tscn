@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://pagoda001"]
+
+[ext_resource type="Script" path="res://scripts/pagoda_tower.gd" id="1"]
+
+[node name="PagodaTower" type="Node2D"]
+script = ExtResource("1")
