@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scripts/game_manager.gd"
 FontSetup="*res://scripts/font_setup.gd"
+LevelConfig="*res://scripts/level_config.gd"
+VFX="*res://scripts/vfx.gd"
 
 [display]
 
@@ -30,7 +32,6 @@ window/stretch/aspect="expand"
 [internationalization]
 
 locale/locale="en"
-locale/fallback="en"
 
 [physics]
 

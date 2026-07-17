@@ -18,6 +18,8 @@ script = ExtResource("2")
 
 [node name="Projectiles" type="Node2D" parent="."]
 
+[node name="Effects" type="Node2D" parent="."]
+
 [node name="SpawnTimer" type="Timer" parent="."]
 one_shot = true
 

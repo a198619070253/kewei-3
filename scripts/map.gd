@@ -13,10 +13,18 @@ var path_points: PackedVector2Array = PackedVector2Array([
 	Vector2(1240, 360),
 ])
 
-const BASE_POS := Vector2(1240, 360)
+var base_pos := Vector2(1240, 360)
+var _ground_color := Color(0.15, 0.22, 0.14)
 
 
 func _ready() -> void:
+	queue_redraw()
+
+
+func apply_level(data: Dictionary) -> void:
+	path_points = data.get("path", path_points)
+	base_pos = data.get("base", base_pos)
+	_ground_color = data.get("ground", _ground_color)
 	queue_redraw()
 
 
@@ -28,11 +36,15 @@ func _draw() -> void:
 
 func _draw_background() -> void:
 	var size := get_viewport().get_visible_rect().size
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.15, 0.22, 0.14))
+	draw_rect(Rect2(Vector2.ZERO, size), _ground_color)
 	for x in range(0, int(size.x), 48):
 		for y in range(0, int(size.y), 48):
 			var shade := 0.02 if (x / 48 + y / 48) % 2 == 0 else 0.0
-			draw_rect(Rect2(x, y, 48, 48), Color(0.15 + shade, 0.22 + shade, 0.14 + shade))
+			draw_rect(Rect2(x, y, 48, 48), Color(
+				_ground_color.r + shade,
+				_ground_color.g + shade,
+				_ground_color.b + shade
+			))
 
 
 func _draw_path() -> void:
@@ -46,8 +58,8 @@ func _draw_path() -> void:
 
 
 func _draw_base_pagoda() -> void:
-	_draw_pagoda(BASE_POS, 6, Color(0.85, 0.65, 0.2), true)
-	draw_string(FontSetup.game_font, BASE_POS + Vector2(-24, 58), "Main Pagoda", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.9, 0.5))
+	_draw_pagoda(base_pos, 6, Color(0.85, 0.65, 0.2), true)
+	draw_string(FontSetup.game_font, base_pos + Vector2(-24, 58), "Main Pagoda", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1, 0.9, 0.5))
 
 
 func _draw_pagoda(pos: Vector2, levels: int, color: Color, is_base: bool = false) -> void:

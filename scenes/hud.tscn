@@ -39,12 +39,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Get Ready"
 
+[node name="LevelLabel" type="Label" parent="TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.75, 0.9, 1, 1)
+text = "Level 1/5: Green Valley"
+
 [node name="BottomBar" type="PanelContainer" parent="."]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -132.0
+offset_top = -168.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -119,8 +125,8 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Build pagodas, stop the enemy, protect the main pagoda!
-10 waves of enemies. 6 tower types:
-Basic · Cannon · Rapid · Sniper · Frost · Splash"
+5 levels, 25 waves total. New map each level!
+9 towers: Basic · Cannon · Rapid · Sniper · Frost · Splash · Poison · Lightning · Laser"
 horizontal_alignment = 1
 autowrap_mode = 2
 

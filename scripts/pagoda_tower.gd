@@ -1,6 +1,8 @@
 extends Node2D
 
-enum TowerKind { BASIC, CANNON, RAPID, SNIPER, FROST, SPLASH }
+enum TowerKind {
+	BASIC, CANNON, RAPID, SNIPER, FROST, SPLASH, POISON, LIGHTNING, LASER
+}
 
 @export var tower_kind: TowerKind = TowerKind.BASIC
 
@@ -14,6 +16,9 @@ var _cooldown := 0.0
 var _splash_radius := 0.0
 var _slow_factor := 1.0
 var _slow_duration := 0.0
+var _poison_dps := 0.0
+var _poison_duration := 0.0
+var _chain_count := 0
 var _projectile_scene := preload("res://scenes/projectile.tscn")
 
 
@@ -52,6 +57,10 @@ func upgrade() -> bool:
 	_fire_rate = maxf(_fire_rate * 0.88, 0.15)
 	if _splash_radius > 0.0:
 		_splash_radius += 6.0
+	if _poison_dps > 0.0:
+		_poison_dps *= 1.2
+	if _chain_count > 0:
+		_chain_count += 1
 	queue_redraw()
 	return true
 
@@ -66,6 +75,9 @@ func _apply_kind_stats() -> void:
 	_splash_radius = 0.0
 	_slow_factor = 1.0
 	_slow_duration = 0.0
+	_poison_dps = 0.0
+	_poison_duration = 0.0
+	_chain_count = 0
 	match tower_kind:
 		TowerKind.BASIC:
 			_damage = 18.0
@@ -94,6 +106,25 @@ func _apply_kind_stats() -> void:
 			_range = 105.0
 			_fire_rate = 1.35
 			_splash_radius = 48.0
+		TowerKind.POISON:
+			_damage = 10.0
+			_range = 125.0
+			_fire_rate = 0.9
+			_poison_dps = 6.0
+			_poison_duration = 3.0
+		TowerKind.LIGHTNING:
+			_damage = 22.0
+			_range = 132.0
+			_fire_rate = 1.05
+			_chain_count = 3
+		TowerKind.LASER:
+			_damage = 38.0
+			_range = 175.0
+			_fire_rate = 1.35
+
+
+func _muzzle_pos() -> Vector2:
+	return global_position + Vector2(0, -level * 14.0 - 10.0)
 
 
 func _find_target() -> Node2D:
@@ -112,29 +143,73 @@ func _find_target() -> Node2D:
 
 
 func _shoot(target: Node2D) -> void:
+	var origin := _muzzle_pos()
+	VFX.spawn_muzzle_flash(origin, _get_tower_color())
+
+	if tower_kind == TowerKind.LASER:
+		_shoot_laser(target, origin)
+		return
+
 	var proj := _projectile_scene.instantiate()
-	proj.global_position = global_position + Vector2(0, -level * 14.0 - 10.0)
+	proj.global_position = origin
 	proj.setup(
 		target,
 		_damage,
 		tower_kind,
 		_splash_radius,
 		_slow_factor,
-		_slow_duration
+		_slow_duration,
+		_poison_dps,
+		_poison_duration,
+		_chain_count
 	)
 	get_tree().current_scene.get_node("Projectiles").add_child(proj)
 
 
-func _draw() -> void:
-	var colors := [
+func _shoot_laser(target: Node2D, origin: Vector2) -> void:
+	if not is_instance_valid(target):
+		return
+	VFX.spawn_laser_beam(origin, target.global_position)
+	VFX.spawn_hit_spark(target.global_position, Color(1.0, 0.35, 0.9))
+	if target.has_method("take_damage"):
+		target.take_damage(_damage)
+
+
+func _get_tower_color() -> Color:
+	var colors := _get_tower_colors()
+	return colors[tower_kind]
+
+
+func _get_tower_colors() -> Array:
+	return [
 		Color(0.7, 0.35, 0.15),
 		Color(0.55, 0.25, 0.55),
 		Color(0.2, 0.55, 0.65),
 		Color(0.25, 0.35, 0.75),
 		Color(0.45, 0.75, 0.95),
 		Color(0.85, 0.45, 0.15),
+		Color(0.35, 0.85, 0.25),
+		Color(0.55, 0.85, 1.0),
+		Color(0.95, 0.25, 0.85),
 	]
+
+
+func _draw() -> void:
+	var colors := _get_tower_colors()
 	_draw_pagoda(level, colors[tower_kind])
+	match tower_kind:
+		TowerKind.FROST:
+			var pulse := 0.5 + sin(Time.get_ticks_msec() * 0.005) * 0.2
+			draw_arc(Vector2.ZERO, 22.0, 0, TAU, 24, Color(0.45, 0.8, 1.0, 0.25 * pulse), 1.5)
+		TowerKind.POISON:
+			var pulse := 0.5 + sin(Time.get_ticks_msec() * 0.006) * 0.2
+			draw_arc(Vector2.ZERO, 20.0, 0, TAU, 20, Color(0.3, 0.9, 0.2, 0.22 * pulse), 1.5)
+		TowerKind.LIGHTNING:
+			var pulse := 0.5 + sin(Time.get_ticks_msec() * 0.008) * 0.25
+			draw_arc(Vector2.ZERO, 21.0, 0, TAU, 22, Color(0.5, 0.85, 1.0, 0.28 * pulse), 1.5)
+		TowerKind.LASER:
+			var pulse := 0.5 + sin(Time.get_ticks_msec() * 0.007) * 0.2
+			draw_arc(Vector2.ZERO, 19.0, 0, TAU, 18, Color(1.0, 0.3, 0.85, 0.25 * pulse), 1.5)
 	draw_arc(Vector2.ZERO, _range, 0, TAU, 64, Color(1, 1, 1, 0.06), 1.0)
 
 

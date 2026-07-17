@@ -7,24 +7,13 @@ func _ready() -> void:
 
 func _init_game() -> void:
 	GameManager.setup(self)
-	_setup_build_slots()
 
 
-func _setup_build_slots() -> void:
-	var slots := [
-		Vector2(120, 280), Vector2(120, 440),
-		Vector2(260, 80), Vector2(260, 220),
-		Vector2(400, 80), Vector2(400, 220),
-		Vector2(460, 420), Vector2(460, 560),
-		Vector2(640, 420), Vector2(640, 560),
-		Vector2(780, 420), Vector2(780, 560),
-		Vector2(720, 80), Vector2(720, 160),
-		Vector2(960, 80), Vector2(960, 160),
-		Vector2(960, 300), Vector2(960, 440),
-		Vector2(1040, 300), Vector2(1040, 440),
-	]
+func rebuild_build_slots(slot_positions: Array) -> void:
+	for child in $BuildSlots.get_children():
+		child.queue_free()
 	var slot_scene := preload("res://scenes/build_slot.tscn")
-	for pos in slots:
+	for pos in slot_positions:
 		var slot := slot_scene.instantiate()
 		slot.global_position = pos
 		$BuildSlots.add_child(slot)
